@@ -34,21 +34,22 @@ func (list *ArrayList) Append(newValue any) {
 }
 
 func (list *ArrayList) checkFull(index int, newValue any) {
-	if list.theSize == cap(list.dataStore) {
-		newDataStore := make([]any, 2*list.theSize)
-		copy(newDataStore, list.dataStore[0:index])
-		newDataStore = append(newDataStore, newValue, list.dataStore[index+1:])
-	} else {
-		list.dataStore = list.dataStore[:list.theSize+1]
-		list.dataStore = append(list.dataStore, newValue, list.dataStore[index+1:])
+	if list.theSize != cap(list.dataStore) {
+		return
 	}
+	newDataStore := make([]any, 2*list.theSize)
+	copy(newDataStore, list.dataStore)
+	newDataStore = append(newDataStore[:index], append([]any{newValue}, newDataStore[index:]...)...)
+	list.dataStore = newDataStore
 }
 
 func (list *ArrayList) Insert(index int, newValue any) error {
 	if index < 0 || index >= list.theSize {
 		return errors.New("索引越界")
 	}
-	list.checkFull(index, newValue)
+
+	list.dataStore = append(list.dataStore[:index], append([]any{newValue}, list.dataStore[index:]...)...)
+
 	return nil
 }
 
@@ -64,13 +65,20 @@ func (list *ArrayList) Get(index int) (any, error) {
 }
 
 func (list *ArrayList) Set(index int, newValue any) error {
-	if index < 0 || index > list.theSize {
+	if index < 0 || index >= list.theSize {
 		return errors.New("索引越界")
 	}
 	list.dataStore[index] = newValue
 	return nil
 }
 
+func (list *ArrayList) Delete(index int) error {
+	if index < 0 || index >= list.theSize {
+		return errors.New("索引越界")
+	}
+	list.dataStore = append(list.dataStore[:index], list.dataStore[index+1:]...)
+	return nil
+}
 func (list *ArrayList) String() string {
 	return fmt.Sprint(list.dataStore)
 }

@@ -10,6 +10,12 @@ func main() {
 	list.Append(1)
 	list.Append(2)
 	list.Append(3)
-	list.Insert(1, 100)
+	err := list.Insert(1, 100)
+	if err != nil {
+		fmt.Println(err)
+	}
+	if err := list.Delete(1); err != nil {
+		fmt.Println(err)
+	}
 	fmt.Println(list)
 }

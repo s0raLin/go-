@@ -2,6 +2,7 @@ package main
 
 import (
 	"first/ArrayList"
+	"first/StackArray"
 	"fmt"
 )
 
@@ -39,6 +40,15 @@ func work2() {
 
 	fmt.Println(list)
 }
+
+func work3() {
+	stack := StackArray.NewStack()
+	stack.Push(1)
+	stack.Push(2)
+	stack.Push(3)
+	fmt.Println(stack)
+}
+
 func main() {
-	work2()
+	work3()
 }

@@ -6,7 +6,8 @@ type Iterator interface {
 	HashNext() bool     // 是否有下一个
 	Next() (any, error) //下一个
 	GetIndex() int
-	Remove()
+	Remove() error
+	Update(newValue any)
 }
 
 type Iterable interface {
@@ -16,6 +17,10 @@ type Iterable interface {
 type ArrayListIterator struct {
 	list         *ArrayList // 数组指针
 	currentIndex int        // 当前索引
+}
+
+func (it *ArrayListIterator) Update(newValue any) {
+	it.list.dataStore[it.currentIndex] = newValue
 }
 
 func (it *ArrayListIterator) HashNext() bool {
@@ -31,17 +36,18 @@ func (it *ArrayListIterator) Next() (any, error) {
 	return value, err
 } //下一个
 
-func (it *ArrayListIterator) Remove() {
+func (it *ArrayListIterator) Remove() error {
 	it.currentIndex--
-	it.list.Delete(it.currentIndex)
+	err := it.list.Delete(it.currentIndex)
+	return err
 }
 
 func (it *ArrayListIterator) GetIndex() int {
 	return it.currentIndex
 }
-func (it *ArrayList) Iterator() Iterator {
+func (list *ArrayList) Iterator() Iterator {
 	iter := new(ArrayListIterator)
 	iter.currentIndex = 0
-	iter.list = it
+	iter.list = list
 	return iter
 }

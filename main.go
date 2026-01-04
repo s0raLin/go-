@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func main() {
+func work1() {
 	list := ArrayList.NewArrayList()
 	list.Append(1)
 	list.Append(2)
@@ -18,4 +18,27 @@ func main() {
 		fmt.Println(err)
 	}
 	fmt.Println(list)
+}
+
+func work2() {
+	list := ArrayList.NewArrayList()
+	list.Append(1)
+	list.Append(2)
+	list.Append(3)
+
+	for iter := list.Iterator(); iter.HashNext(); {
+		next, err := iter.Next()
+		if err != nil {
+			break
+		}
+		if next == 2 {
+			iter.Remove()
+		}
+		fmt.Println(next)
+	}
+
+	fmt.Println(list)
+}
+func main() {
+	work2()
 }

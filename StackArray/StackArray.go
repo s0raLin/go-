@@ -52,9 +52,10 @@ func (list *Stack) Pop() (any, error) {
 	if list.IsEmpty() {
 		return nil, errors.New("栈为空")
 	}
-	data := list.dataSource[list.currentSize-1]
+	last := list.dataSource[list.currentSize-1]
+	list.dataSource = list.dataSource[:list.currentSize-1]
 	list.currentSize--
-	return data, nil
+	return last, nil
 }
 
 func (list *Stack) Size() int {

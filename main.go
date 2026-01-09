@@ -51,6 +51,17 @@ func work3() {
 	fmt.Println(stack)
 }
 
+func work4() {
+	stack := ArrayList.NewArrayListStack()
+	stack.Push(1)
+	stack.Push(2)
+	stack.Push(3)
+	fmt.Println(stack)
+	stack.Pop()
+	stack.Pop()
+	fmt.Println(stack)
+}
+
 func main() {
-	work3()
+	work4()
 }

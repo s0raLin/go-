@@ -62,6 +62,69 @@ func work4() {
 	fmt.Println(stack)
 }
 
+func Add(num int) int {
+	if num == 0 {
+		return 0
+	} else {
+		return num + Add(num-1)
+	}
+}
+
+func work5() {
+	res := Add(5)
+	fmt.Println(res)
+}
+
+// 栈模拟递归
+func work6() {
+	mystack := StackArray.NewStack()
+	mystack.Push(5)
+	last := 0
+
+	for !mystack.IsEmpty() {
+		data, err := mystack.Pop()
+		if err != nil {
+			break
+		}
+		if data == 0 {
+			last += 0
+		} else {
+			last += data.(int)
+			mystack.Push(data.(int) - 1)
+		}
+	}
+	fmt.Println(last)
+}
+
+// 斐波那契数列
+func FAB(num int) int {
+	if num == 1 || num == 2 {
+		return 1
+	} else {
+		return FAB(num-1) + FAB(num-2)
+	}
+}
+
+func work7() {
+	println(FAB(5))
+	mystack := StackArray.NewStack()
+	mystack.Push(5)
+	last := 0
+	for !mystack.IsEmpty() {
+		data, err := mystack.Pop()
+		if err != nil {
+			break
+		}
+		if data == 1 || data == 2 {
+			last += 1
+		} else {
+			mystack.Push(data.(int) - 1)
+			mystack.Push(data.(int) - 2)
+		}
+	}
+	fmt.Println(last)
+}
+
 func main() {
-	work4()
+	work7()
 }
